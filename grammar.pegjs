@@ -30,9 +30,10 @@ stopped_line
     }
 
 syscall_line
-  = pid:pid?
+  = pid:pid? timestamp:timestamp?
     syscall:syscall args:arguments_list result:result timing:timing? {
     return {
+        timestamp: timestamp,
         syscall: syscall,
         args: args,
         result: result,
@@ -279,6 +280,8 @@ result
         return value;
     }
   }
+
+timestamp = _ value:([\.\-0-9]+) _ { return Number(value.join('')); }
 
 timing = _ '<' value:([\.\-0-9]+) '>' _ { return Number(value.join('')); }
 
